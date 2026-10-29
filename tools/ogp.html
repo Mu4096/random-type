@@ -1,0 +1,63 @@
+<!doctype html>
+<!--
+  OGP 画像（public/ogp.png）の元。書き換えたら PowerShell でリポジトリ直下から次を実行して書き出し直す
+  & "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=5000 --user-data-dir="$env:TEMP\ogp-edge" --screenshot="$PWD\public\ogp.png" "$PWD\tools\ogp.html"
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet" />
+<style>
+  :root { --ink:#1c2a5e; --main:#2f6bff; --pink:#ff4f9a; --yellow:#ffd23f; --green:#2ecf8f; --purple:#8f63ff; }
+  html, body { margin:0; width:1200px; height:630px; overflow:hidden; }
+  body {
+    background: linear-gradient(135deg, #fff1b8, #cfe6ff 40%, #bfdcff 65%, #ffd9ec);
+    color: var(--ink); font-family:'M PLUS Rounded 1c', sans-serif; font-weight:800;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:34px;
+    position:relative;
+  }
+  body::before {
+    content:''; position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle, #ff4f9a55 3px, transparent 4px),
+      radial-gradient(circle, #2f6bff55 3px, transparent 4px),
+      radial-gradient(circle, #ffd23f88 4px, transparent 5px);
+    background-size:90px 90px,130px 130px,170px 170px;
+    background-position:0 0,40px 60px,80px 20px;
+  }
+  body > * { position:relative; }
+  .title { display:flex; gap:8px; font-family:'Dela Gothic One', sans-serif; font-size:80px; line-height:1; }
+  .title span {
+    min-width:.9em; padding:.12em .08em; text-align:center; color:#fff; background:var(--tile,var(--main));
+    border:.06em solid var(--ink); border-radius:.18em; box-shadow:.07em .07em 0 var(--ink);
+    /* タイトル画面と同じく1文字ずつ少しずつ傾ける */
+    transform: rotate(calc((var(--i) - 5) * 1.2deg));
+  }
+  .title span:nth-child(8n+2){--tile:var(--pink)}
+  .title span:nth-child(8n+4){--tile:var(--yellow);color:var(--ink)}
+  .title span:nth-child(8n+6){--tile:var(--green)}
+  .title span:nth-child(8n+8){--tile:var(--purple)}
+  .rules { padding:18px 40px; background:#fff; border:3px solid var(--ink); border-radius:22px; box-shadow:6px 6px 0 var(--ink); text-align:center; }
+  .rules p { margin:0; }
+  .main { font-size:44px; line-height:1.5; }
+  .main em { font-style:normal; color:#fff; background:var(--pink); border-radius:10px; padding:0 .3em; margin-left:.15em; }
+  .sub { font-size:32px; margin-top:6px; }
+  .sub strong { font-size:1.3em; color:var(--main); }
+  .kb { display:flex; gap:10px; }
+  .kb div {
+    width:62px; height:62px; display:grid; place-items:center; font-size:30px;
+    background:#fff; border:3px solid var(--ink); border-radius:12px; box-shadow:4px 4px 0 var(--ink);
+  }
+  .kb .sw { background:var(--yellow); }
+  .kb .sw2 { background:var(--pink); color:#fff; }
+</style>
+</head>
+<body>
+  <div class="title"><span style="--i:0">R</span><span style="--i:1">A</span><span style="--i:2">N</span><span style="--i:3">D</span><span style="--i:4">O</span><span style="--i:5">M</span><span style="--i:6">_</span><span style="--i:7">T</span><span style="--i:8">Y</span><span style="--i:9">P</span><span style="--i:10">E</span></div>
+  <div class="rules">
+    <p class="main">1文打つたびに<em>キーが入れ替わる！</em></p>
+    <p class="sub">制限時間<strong>90秒</strong>で何打鍵いける？</p>
+  </div>
+  <div class="kb"><div>Q</div><div>W</div><div>E</div><div class="sw">T</div><div class="sw2">R</div><div>Y</div><div class="sw">O</div><div>I</div><div class="sw2">U</div><div>P</div></div>
+</body>
+</html>

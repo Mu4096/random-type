@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.vite/
+*.local
+.DS_Store
+Thumbs.db
+.claude/launch.json
+
+# 宣伝動画の撮影の途中のファイル（コマの画像など。できた動画は promo/random-type-promo.mp4）
+promo/out/

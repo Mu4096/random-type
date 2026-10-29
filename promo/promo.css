@@ -1,0 +1,624 @@
+/* 宣伝動画のテロップと重ねるもの（ゲームと同じ配色。濃いフチ・極太の文字。傾けない） */
+
+/* 動画に要らないもの（ミュートボタン・操作案内・IME の札・ランキングボタン・結果画面の3択ボタン） */
+.mute,
+.guide,
+.ime-notice,
+.ranking-button,
+.choices,
+.rank-out {
+  display: none !important;
+}
+
+/* ---- 場面ごとの画面の大きさ ---- */
+
+/* 罠：問題文とキーボードを大きく */
+.clip-trap #app {
+  transform: scale(1.06);
+  transform-origin: 50% 0;
+}
+
+/* 探す・カオス・結果：字幕を上に出すので、字幕と重ならないよう画面を下げて小さく */
+.clip-hunt #app,
+.clip-chaos #app {
+  transform: translateY(96px) scale(0.82);
+  transform-origin: 50% 0;
+}
+
+.clip-lose .result-screen {
+  transform: translateY(84px) scale(0.8);
+  transform-origin: 50% 0;
+}
+
+/* キーボードだけを大きく見せる舞台（問題・ルール） */
+.clip-quiz #app,
+.clip-rule #app,
+.clip-ending #app {
+  padding: 0;
+}
+
+.stage {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.stage .keyboard {
+  --key-size: 74px;
+  --key-gap: 18px;
+  gap: 18px;
+  margin: 0;
+  padding: 18px 18px 22px;
+}
+
+.clip-quiz .stage {
+  padding-top: 90px;
+  box-sizing: border-box;
+}
+
+/* ルールの説明はキーボードの上に出すので、キーボードを少し下げる */
+.clip-rule .stage {
+  padding-top: 90px;
+  box-sizing: border-box;
+}
+
+.clip-rule .telop.caption-top {
+  top: 30px;
+}
+
+.clip-rule .caption-box {
+  font-size: 52px;
+}
+
+/* ---- 重ねるものの層 ---- */
+
+.promo-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  font-family: var(--font-heavy);
+  /* Dela Gothic One は太さが1つだけなので、太字にするとブラウザが無理に太らせて字がつぶれる */
+  font-weight: normal;
+  color: var(--ink);
+}
+
+.promo-under {
+  z-index: 15;
+}
+
+.telop {
+  position: absolute;
+}
+
+.telop.out {
+  animation: telop-out 0.3s ease-in forwards;
+}
+
+@keyframes telop-out {
+  to {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+/* ---- 字幕 ---- */
+
+/* 字幕はどの場面も画面の上に出す */
+
+.telop.caption {
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.telop.caption-bottom {
+  bottom: 26px;
+}
+
+.telop.caption-top {
+  top: 14px;
+}
+
+.caption-box {
+  display: inline-block;
+  padding: 0.22em 0.9em 0.28em;
+  font-size: 44px;
+  line-height: 1.2;
+  background: var(--white);
+  border: 4px solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 6px 6px 0 var(--ink);
+  animation: caption-in 0.4s cubic-bezier(0.3, 1.7, 0.6, 1) both;
+}
+
+.caption-box em,
+.copy-line-1 em,
+.ending-card em {
+  font-style: normal;
+  color: var(--white);
+  background: var(--pink);
+  margin: 0 0.1em;
+  padding: 0 0.25em;
+  border-radius: 0.22em;
+}
+
+.caption-box em.orange {
+  background: var(--orange);
+}
+
+@keyframes caption-in {
+  from {
+    transform: translateY(40px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* ---- 問題：「“A” はどこ？」 ---- */
+
+.telop.quiz {
+  left: 0;
+  right: 0;
+  top: 22px;
+  text-align: center;
+}
+
+.quiz-box {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 0.15em 0.9em 0.3em;
+  background: var(--white);
+  border: 5px solid var(--ink);
+  border-radius: 26px;
+  box-shadow: 8px 8px 0 var(--ink);
+  animation: caption-in 0.4s cubic-bezier(0.3, 1.7, 0.6, 1) both;
+}
+
+.quiz-q {
+  font-size: 72px;
+  line-height: 1.15;
+}
+
+.quiz-q b {
+  font-weight: normal;
+  color: var(--pink);
+  -webkit-text-stroke: 6px var(--ink);
+  paint-order: stroke fill;
+}
+
+/* 制限時間のバー（2秒で減る） */
+.quiz-timer {
+  width: 420px;
+  height: 18px;
+  background: #e3e8f4;
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.quiz-timer i {
+  display: block;
+  height: 100%;
+  background: var(--yellow);
+  transform-origin: 0 50%;
+  animation: quiz-timer 2.05s 0.4s linear both;
+}
+
+@keyframes quiz-timer {
+  from {
+    transform: scaleX(1);
+  }
+  70% {
+    background: var(--yellow);
+  }
+  to {
+    transform: scaleX(0);
+    background: var(--red);
+  }
+}
+
+/* 答え：A 以外のキーを薄くして、A を大きく光らせる */
+.quiz-answer .key:not(.quiz-hit) {
+  opacity: 0.35;
+  transition: opacity 0.2s;
+}
+
+.key.quiz-hit {
+  z-index: 2;
+  color: var(--white);
+  background: var(--pink);
+  animation: quiz-hit 0.45s cubic-bezier(0.3, 1.8, 0.6, 1) both;
+  box-shadow:
+    0 4px 0 var(--ink),
+    0 0 0 6px #fff,
+    0 0 30px 10px #ff4f9a99;
+}
+
+@keyframes quiz-hit {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.35);
+  }
+}
+
+/* ---- 吹き出し（キーを指す札） ---- */
+
+.telop.bubble {
+  translate: -50% -100%;
+}
+
+.bubble-box {
+  position: relative;
+  display: inline-block;
+  padding: 0.18em 0.6em 0.24em;
+  font-size: 30px;
+  white-space: nowrap;
+  color: var(--white);
+  background: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transform-origin: 50% 100%;
+  animation: bubble-in 0.35s cubic-bezier(0.3, 1.8, 0.6, 1) both;
+}
+
+.bubble-box::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -13px;
+  translate: -50% 0;
+  border: 10px solid transparent;
+  border-top-color: var(--ink);
+  border-bottom: 0;
+}
+
+.bubble-orange .bubble-box {
+  background: var(--orange);
+}
+
+.bubble-pink .bubble-box {
+  background: var(--pink);
+}
+
+@keyframes bubble-in {
+  from {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* ---- 人差し指のアイコン（指先がキーの中心に来る） ---- */
+
+.telop.finger {
+  z-index: 3;
+  transition-property: left, top;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.finger-icon {
+  display: block;
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', sans-serif;
+  font-size: 84px;
+  line-height: 1;
+  translate: -42% -6%;
+  filter: drop-shadow(4px 5px 0 #1c2a5e88);
+}
+
+.finger-icon.tap {
+  animation: finger-tap 0.18s ease-out;
+}
+
+@keyframes finger-tap {
+  50% {
+    transform: translateY(10px) scale(0.92);
+  }
+}
+
+/* ---- 矢印（いつもの位置 → 本当の位置） ---- */
+
+.telop.arrow {
+  inset: 0;
+}
+
+.telop.arrow svg {
+  overflow: visible;
+}
+
+.arrow-line,
+.arrow-shadow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  animation: arrow-draw 0.4s ease-out both;
+}
+
+.arrow-line {
+  stroke-width: 9;
+}
+
+.arrow-shadow {
+  stroke: var(--ink);
+  stroke-width: 16;
+}
+
+@keyframes arrow-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---- 目線（探しているところ） ---- */
+
+.telop.eye {
+  z-index: 2;
+  transition-property: left, top, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.eye-ring {
+  display: block;
+  width: 64px;
+  height: 64px;
+  translate: -50% -50%;
+  border: 6px solid var(--yellow);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 3px var(--ink),
+    inset 0 0 0 3px var(--ink),
+    0 0 24px 6px #ffd23faa;
+}
+
+/* ---- 「経験は無意味！」 ---- */
+
+/* 後ろの画面を暗くして、コピーを目立たせる */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: #1c2a5e;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+}
+
+body.promo-dim::after {
+  opacity: 0.62;
+}
+
+.promo-quake {
+  animation: promo-quake 0.45s;
+}
+
+@keyframes promo-quake {
+  15% {
+    translate: -14px 8px;
+  }
+  30% {
+    translate: 12px -10px;
+  }
+  45% {
+    translate: -8px 6px;
+  }
+  60% {
+    translate: 6px -4px;
+  }
+  80% {
+    translate: -2px 2px;
+  }
+}
+
+.telop.slam {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: transform 0.45s cubic-bezier(0.5, 0, 0.3, 1);
+}
+
+/* コピーの後ろで回る集中線 */
+.burst {
+  position: absolute;
+  left: calc(50% - 750px);
+  top: calc(50% - 750px);
+  width: 1500px;
+  height: 1500px;
+  border-radius: 50%;
+  background: repeating-conic-gradient(#ff4f9a 0deg 9deg, #ffd23f 9deg 18deg);
+  mask-image: radial-gradient(circle, #000 18%, transparent 62%);
+  opacity: 0.9;
+  animation:
+    burst-in 0.3s cubic-bezier(0.3, 1.6, 0.6, 1) both,
+    burst-spin 12s linear infinite;
+}
+
+@keyframes burst-in {
+  from {
+    transform: scale(0);
+  }
+}
+
+@keyframes burst-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.big-copy {
+  position: relative;
+  font-size: 150px;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--white);
+  -webkit-text-stroke: 16px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 10px 10px 0 var(--ink);
+  animation: slam-in 0.32s cubic-bezier(0.2, 1.4, 0.5, 1) both;
+}
+
+@keyframes slam-in {
+  from {
+    transform: scale(3);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+}
+
+/* コピーの後半が出るときは上に小さく下がる */
+.telop.slam.shrink {
+  transform: translateY(-190px) scale(0.62);
+}
+
+.telop.slam.shrink .burst {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.telop.copy {
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.telop.copy-1 {
+  top: 330px;
+}
+
+.telop.copy-2 {
+  top: 450px;
+}
+
+.copy-line {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.copy-line-1 {
+  padding: 0.15em 0.8em 0.2em;
+  font-size: 64px;
+  background: var(--white);
+  border: 5px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 8px 8px 0 var(--ink);
+  animation: caption-in 0.4s cubic-bezier(0.3, 1.7, 0.6, 1) both;
+}
+
+.copy-line-2 {
+  font-size: 96px;
+  color: var(--yellow);
+  -webkit-text-stroke: 12px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 8px 8px 0 var(--ink);
+  animation: slam-in 0.32s cubic-bezier(0.2, 1.4, 0.5, 1) both;
+}
+
+/* ---- 締め ---- */
+
+.promo-logo {
+  margin: 0;
+  font-size: 78px;
+}
+
+.promo-logo span {
+  animation: letter-in 0.4s cubic-bezier(0.3, 1.8, 0.6, 1) both;
+  animation-delay: calc(0.05s + var(--i) * 0.045s);
+}
+
+@keyframes letter-in {
+  from {
+    transform: translateY(-260px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+.ending {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  font-family: var(--font-heavy);
+  font-weight: normal;
+}
+
+.ending-card {
+  padding: 0.2em 1em 0.25em;
+  font-size: 52px;
+  background: var(--white);
+  border: 5px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 8px 8px 0 var(--ink);
+  animation: caption-in 0.45s 0.55s cubic-bezier(0.3, 1.7, 0.6, 1) both;
+}
+
+.ending-q {
+  font-size: 40px;
+  color: var(--ink);
+  animation: caption-in 0.45s 1s cubic-bezier(0.3, 1.7, 0.6, 1) both;
+}
+
+.ending-q b {
+  font-weight: normal;
+  color: var(--pink);
+  -webkit-text-stroke: 4px var(--ink);
+  paint-order: stroke fill;
+  font-size: 1.25em;
+}
+
+.ending-keys {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  background: var(--white);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--ink);
+  animation: caption-in 0.45s 0.3s cubic-bezier(0.3, 1.7, 0.6, 1) both;
+  --diff: var(--pink);
+  --diff-deep: #d0145f;
+}
+
+.ending-keys .mini-key {
+  width: 46px;
+  height: 46px;
+  font-size: 26px;
+  line-height: 46px;
+  border-radius: 9px;
+  box-shadow: 0 4px 0 #c3cbe0;
+}
+
+/* テロップの文字のフォントを先に読み込ませる */
+.font-warm {
+  position: fixed;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  font-family: var(--font-heavy);
+  pointer-events: none;
+}
+
+.font-warm span {
+  font-family: var(--font);
+  font-weight: 800;
+}
+
+/* 探す場面は画面を下げているので、キーボードの下に出る大きな文字（FEVER!! など）が下で切れないよう小さく・上に */
+.clip-hunt .fx-text.pop-fever {
+  font-size: 5.6rem;
+  margin-top: -40px;
+}
+
+.clip-hunt .fx-text.pop-milestone,
+.clip-hunt .fx-text.pop-milestone-sub {
+  margin-top: -30px;
+}
