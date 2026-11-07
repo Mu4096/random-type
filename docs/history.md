@@ -20,6 +20,17 @@
 
 ---
 
+## 2026-11-07 GitHub Pages での再公開
+- ログ: logs/2026-11-07_1517_republish.md
+- コミット: 本履歴を含むコミット「[republish] GitHub Pages で公開し直した記録を残す」
+- 実装・変更
+  - Mu4096/random-type の GitHub Pages を GitHub Actions 方式で有効化し、deploy.yml を手動実行して公開。URL は https://mu4096.github.io/random-type/
+  - コードの変更はなし
+- 判断
+  - [確認済み] 公開先は Mu4096/random-type。作業フォルダは RANDOM_TYPE-new（旧フォルダ RANDOM_TYPE と非公開の Mu4096/random-type-old は触らない）
+  - [AI判断] 空コミットを増やさないよう、最初のデプロイは push ではなく手動実行にした
+- 仕様書の更新: 「公開方法」を公開中の状態に書き換え
+
 ## 2026-10-30 アカウント ID の変更と新しいリポジトリへの入れ直し
 - ログ: logs/2026-10-30_0058_rename-account-id.md
 - コミット: 本履歴を含むコミット「[rename-account-id] アカウント ID の変更に合わせて置き換え、新しいリポジトリに入れ直す」

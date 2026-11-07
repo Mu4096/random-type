@@ -271,17 +271,17 @@ spaceやshiftなどのキー、数字キー、記号のキーは置き換わら�
 
 ## 公開方法
 
-現在は公開を停止している（GitHub Pages は無効、リポジトリは非公開）
+GitHub Pages で公開している
 
-リポジトリ: https://github.com/Mu4096/random-type （Private）
+リポジトリ: https://github.com/Mu4096/random-type （Public）
 
-公開していたときの URL: https://mu4096.github.io/random-type/
+URL: https://mu4096.github.io/random-type/
 
 URL を Discord などで共有したときは、タイトル「RANDOM_TYPE」、説明文「1文打つたびにキーが入れ替わる！制限時間90秒で何打鍵いける？」、大きな画像（1200×630）を表示する。画像はタイトル画面と同じ配色で、1文字ずつ傾いたキー風の「RANDOM_TYPE」、ルール説明のカード、一部が入れ替わったキーの列
 
 ブラウザのタブのアイコン（ファビコン）は、メインの青の台に入れ替わる2つのキー（黄色の R とピンクの T）と入れ替えの矢印
 
-公開の仕組みは GitHub Actions（.github/workflows/deploy.yml）で、main ブランチに push するとテスト・ビルドして公開する（テストが失敗したら公開しない）。現在はこのワークフローを無効にしているので、push しても公開されない
+公開の仕組みは GitHub Actions（.github/workflows/deploy.yml）で、main ブランチに push するとテスト・ビルドして公開する（テストが失敗したら公開しない）
 
 ## 宣伝動画
 

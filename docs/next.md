@@ -1,23 +1,27 @@
 # 次の作業
 
-- 更新: 2026-10-30（rename-account-id の後）
+- 更新: 2026-11-07（republish の後）
 
 ## やること
-CLAUDE.md の実装順（1〜6）はすべて完了。ただし 2026-10-23 に公開を停止した（unpublish）。GitHub Pages は無効、リポジトリは Private。
-2026-10-30 にアカウント ID を Mu4096 に変え、新しいリポジトリ Mu4096/random-type（Private）に履歴を作り直して入れた（rename-account-id）。それより前の push 済みの記述は旧リポジトリでのこと（旧リポジトリは非公開のまま別名で残っている）。
+CLAUDE.md の実装順（1〜6）はすべて完了。2026-11-07 に https://mu4096.github.io/random-type/ で公開し直した（republish）。リポジトリは Mu4096/random-type（Public）。
+2026-10-30 にアカウント ID を Mu4096 に変え、新しいリポジトリに履歴を作り直して入れた（rename-account-id）。それより前の push 済みの記述は旧リポジトリでのこと（旧リポジトリは Mu4096/random-type-old として非公開で残っている）。
 README.md の追加、readable-text、mode-cards、start-keys、result-choices、ランキング画面の「登録しない」（register-decline）、ファビコン（favicon）、タイトル画面のサブタイトル削除（remove-subtitle）、結果画面のランクインの吹き出し（rank-bubble）、ランク基準の緩和（grade-looser）、ちょっぴり難しめモードの説明文の修正（normal-desc-period）、URL を共有したときの表示（ogp）、ランク基準のさらなる引き下げ（grade-lower）、ランク評価でミスを差し引く（grade-miss-penalty）、指ごとの範囲の色の枠（finger-zones）、ログの時刻のずれの修正と時刻確認のルール追加（fix-log-times）、結果画面の GOD ランク追加と基準の変更（grade-god）、結果画面のランクのメーター演出（grade-meter）まで push 済み（2026-10-17）。
 宣伝動画（promo-video、promo/random-type-promo.mp4）と、タイトル画面で放置すると宣伝動画を流す機能（attract-video）も push 済み（2026-10-18）。
 タイトルの文字が入れ替わったまま残る不具合の修正（title-scramble-stuck）も push 済み（2026-10-18）。
 次に何をするかはユーザーに聞く。候補として出せるもの：
 
-- 再公開するか（するなら下の「メモ」の再公開の手順）。公開停止中は、公開ページでの確認（音つきの自動再生、Discord の表示など）はできない
+- 公開ページの実機での確認（republish の自動確認では見ていないもの）
+  - 実機キーボードで1プレイ通して、結果画面まで進める。伸ばし棒（-）を含む文も打つ
+  - 効果音と、放置したときの宣伝動画の音
+  - Discord で URL を貼って、説明文と画像（public/ogp.png）が出るか（Discord は表示をキャッシュするので、前に貼った URL は古いままのことがある）
+  - 自動確認で y の直後の u が1回だけ反映されなかった（原因不明。間隔なしの5打鍵では再現せず）。実機で打鍵の取りこぼしがないか見る
 
 - 宣伝動画の手直し（spec.md「宣伝動画」、promo/director.ts の場面ごとの台本）
   - 音は耳では未確認（効果音と BGM の大きさのつり合い、BGM の曲調）
   - X に載せたときの見え方（ミュートでの自動再生、スマホでの字幕の読みやすさ）
   - 縦長・正方形の版が要るか
 - 放置したときの宣伝動画の手直し（src/ui/attract.ts の ATTRACT_IDLE_MS など）
-  - 実際の公開ページで音つきで流れるか（ブラウザの自動再生の制限）。耳では未確認。再公開しないなら npm.cmd run preview で確認する
+  - 実際の公開ページで音つきで流れるか（ブラウザの自動再生の制限）。耳では未確認
   - スマホ・タブレットでの見え方
 - 実際に遊んでみての調整
   - 結果画面の3択ボタン・ランキング画面での登録の使い心地
@@ -29,7 +33,6 @@ README.md の追加、readable-text、mode-cards、start-keys、result-choices�
   - 難易度カードのおすすめの一言の文言
 - ほかの画面の文字の読みやすさ（プレイ画面のステータス、ランキング画面、操作案内の灰色の文字など。今回はタイトル画面と結果画面だけ直した）
 - 問題文の追加・入れ替え
-- 再公開したら、Discord で URL を貼って、説明文と画像（public/ogp.png）が出るかの確認（Discord は表示をキャッシュするので、前に貼った URL は古いままのことがある）
 - スマホ・タブレットでの扱い（キーボード前提のゲームなので、案内を出すかなど）。README には「非対応」と書いてあるので、対応を変えたら README も直す。スマホ幅だと結果画面のランクのメーターはスコアの下に回る（スクロールが要る）
 - 実機で日本語入力 ON のまま Space / Enter を押したときの確認（開始はするが、プレイ中の打鍵で IME 警告が出る想定）
 - ライセンス（LICENSE ファイル）を付けるか。付けたら README にライセンスの節を足す
@@ -39,9 +42,9 @@ README.md の追加、readable-text、mode-cards、start-keys、result-choices�
 - 次にやりたいこと（上の候補以外でもよい）
 
 ## メモ
-- 公開は停止中。新しいリポジトリではデプロイのワークフロー（deploy.yml）を無効にしたかをユーザーに確認すること（無効にしていないと main への push で動くが、Private で Pages が無効なので公開はされず失敗する）
-- 再公開の手順：リポジトリを Public に戻す（無料プランでは非公開リポジトリで Pages を使えない）→ Settings → Pages の Source で GitHub Actions を選ぶ → `gh workflow enable deploy.yml` → main に push するか Actions から手動実行。spec.md の「公開方法」も戻す
-- CLAUDE.md には「GitHub Pages で公開」の記述が残っているが、ユーザーの判断でそのままにしている
+- 公開中。main に push するとテスト・ビルドして自動で公開される（deploy.yml）。公開したくない変更は push しない
+- 作業フォルダは C:\work\creative\RANDOM_TYPE-new。隣の RANDOM_TYPE は旧フォルダで、origin が非公開の Mu4096/random-type-old を指している。旧フォルダでセッションを開いていたら、ユーザーに伝えて新フォルダで作業する
+- ブラウザ操作ツールの key で "minus" を送ってもゲームに届かなかった。伸ばし棒を試すときは event.code=Minus の keydown を dispatch する
 - ログの時刻は推測しない。書く前に毎回 `date "+%Y-%m-%d %H:%M"` を実行し、結果を見てから書く（CLAUDE.md の「ログ」）
 - push はユーザーの指示があったときだけ。ユーザーはまとめて push する方針
 - ユーザーの PowerShell では `npm.cmd` を使う（CLAUDE.md のコマンド欄）
