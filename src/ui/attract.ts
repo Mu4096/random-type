@@ -127,9 +127,9 @@ export class AttractVideo {
 
 function readEnabled(): boolean {
   try {
-    // 初期値は「使う」
-    return localStorage.getItem(ENABLED_KEY) !== '0'
+    // 初期値は「使わない」。📺 ボタンでオンにしたときだけ流す
+    return localStorage.getItem(ENABLED_KEY) === '1'
   } catch {
-    return true
+    return false
   }
 }

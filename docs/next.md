@@ -1,6 +1,6 @@
 # 次の作業
 
-- 更新: 2026-11-08（normal-grade-s70 の後）
+- 更新: 2026-11-08（attract-default-off の後）
 
 ## やること
 CLAUDE.md の実装順（1〜6）はすべて完了。2026-11-07 に https://mu4096.github.io/random-type/ で公開し直した（republish）。リポジトリは Mu4096/random-type（Public）。
@@ -8,6 +8,7 @@ CLAUDE.md の実装順（1〜6）はすべて完了。2026-11-07 に https://mu4
 README.md の追加、readable-text、mode-cards、start-keys、result-choices、ランキング画面の「登録しない」（register-decline）、ファビコン（favicon）、タイトル画面のサブタイトル削除（remove-subtitle）、結果画面のランクインの吹き出し（rank-bubble）、ランク基準の緩和（grade-looser）、ちょっぴり難しめモードの説明文の修正（normal-desc-period）、URL を共有したときの表示（ogp）、ランク基準のさらなる引き下げ（grade-lower）、ランク評価でミスを差し引く（grade-miss-penalty）、指ごとの範囲の色の枠（finger-zones）、ログの時刻のずれの修正と時刻確認のルール追加（fix-log-times）、結果画面の GOD ランク追加と基準の変更（grade-god）、結果画面のランクのメーター演出（grade-meter）まで push 済み（2026-10-17）。
 宣伝動画（promo-video、promo/random-type-promo.mp4）と、タイトル画面で放置すると宣伝動画を流す機能（attract-video）も push 済み（2026-10-18）。
 タイトルの文字が入れ替わったまま残る不具合の修正（title-scramble-stuck）も push 済み（2026-10-18）。
+ちょっぴり難しめの S 判定の変更（normal-grade-s70）と、放置したときの宣伝動画の初期値オフ（attract-default-off）も push 済み（2026-11-08）。
 次に何をするかはユーザーに聞く。候補として出せるもの：
 
 - 公開ページの実機での確認（republish の自動確認では見ていないもの）
@@ -20,12 +21,12 @@ README.md の追加、readable-text、mode-cards、start-keys、result-choices�
   - 音は耳では未確認（効果音と BGM の大きさのつり合い、BGM の曲調）
   - X に載せたときの見え方（ミュートでの自動再生、スマホでの字幕の読みやすさ）
   - 縦長・正方形の版が要るか
-- 放置したときの宣伝動画の手直し（src/ui/attract.ts の ATTRACT_IDLE_MS など）
+- 放置したときの宣伝動画の手直し（src/ui/attract.ts の ATTRACT_IDLE_MS など）。attract-default-off で 📺 の初期値をオフにした
   - 実際の公開ページで音つきで流れるか（ブラウザの自動再生の制限）。耳では未確認
   - スマホ・タブレットでの見え方
 - 実際に遊んでみての調整
   - 結果画面の3択ボタン・ランキング画面での登録の使い心地
-  - ランク評価の kpm 基準（grade-god で GOD を足して6段階に。やさしいは GOD＝100・S＝80・A＝60。ちょっぴり難しめの S は normal-grade-s70 で 60→70 に（未 push）。spec.md「結果画面」の表、hype.ts の GRADE_KPM）
+  - ランク評価の kpm 基準（grade-god で GOD を足して6段階に。やさしいは GOD＝100・S＝80・A＝60。ちょっぴり難しめの S は normal-grade-s70 で 60→70 に。spec.md「結果画面」の表、hype.ts の GRADE_KPM）
   - ランク評価でミスを差し引く係数（1ミス0.2打鍵。hype.ts の GRADE_MISS_PENALTY）。ふつうに遊んで下がりすぎないか、ガチャガチャ押して十分下がるか
   - フィーバーに入るコンボ数（15）、節目の間隔、「見つけた」の1.2秒
   - 演出の多さ・効果音の音量や音色
@@ -70,7 +71,7 @@ README.md の追加、readable-text、mode-cards、start-keys、result-choices�
 - 宣伝動画は `node promo/capture.mjs`（全部）・`node promo/capture.mjs 場面名…`（その場面だけ撮り直してまとめ直す）・`--still 場面名 秒…`（確認用のコマ）・`--render`（撮り直さずに音と動画のまとめだけ）。全部撮ると数分。場面の長さと順番は promo/clips.mjs。Chrome（なければ Edge）と ffmpeg が要る。コマの画像は promo/out/（git に含めない）
 - ヘッドレスの Edge は撮影を数十回続けると撮影の頼みに返事をしなくなるので、Chrome を優先している（promo/cdp.mjs）
 - 台本の at(時刻, fn) は仮想の時刻（絶対時刻）。本物のゲームの場面（hunt・chaos・lose）は種（clips.mjs の seed）で展開が決まる。hunt の撮り始め（director.ts の HUNT_START）は1文クリアの時刻から決めているので、種や打ち方を変えたら --still でコンソールの「1文クリア」の時刻を見て合わせ直す
-- 放置したときの宣伝動画は src/ui/attract.ts（AttractVideo）。app.ts の showTitle で arm、startGame・showRanking で disarm、onKeyDown の最初で handleKey。宣伝動画を作り直すと、ゲーム内で流れる動画も変わる（同じファイルを import している）
+- 放置したときの宣伝動画は src/ui/attract.ts（AttractVideo）。📺 の設定は localStorage の random-type:attract（'1' のときだけオン、初期値オフ）。ブラウザで流れるのを確かめるときは先にオンにする。app.ts の showTitle で arm、startGame・showRanking で disarm、onKeyDown の最初で handleKey。宣伝動画を作り直すと、ゲーム内で流れる動画も変わる（同じファイルを import している）
 - ブラウザの自動確認で30秒待つときは、ブラウザの画面の上でマウスが動くと待ち時間がやり直される
 - 宣伝動画の字幕は全場面で上（場面ごとに位置を変えない）。重なる場面はゲーム画面を下げる（promo.css）
 - テロップに Dela Gothic One を使うときは font-weight: normal にする（太字にするとブラウザが無理に太らせて字がつぶれる）
