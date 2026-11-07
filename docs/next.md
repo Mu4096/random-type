@@ -1,6 +1,6 @@
 # 次の作業
 
-- 更新: 2026-11-07（republish の後）
+- 更新: 2026-11-08（normal-grade-s70 の後）
 
 ## やること
 CLAUDE.md の実装順（1〜6）はすべて完了。2026-11-07 に https://mu4096.github.io/random-type/ で公開し直した（republish）。リポジトリは Mu4096/random-type（Public）。
@@ -25,7 +25,7 @@ README.md の追加、readable-text、mode-cards、start-keys、result-choices�
   - スマホ・タブレットでの見え方
 - 実際に遊んでみての調整
   - 結果画面の3択ボタン・ランキング画面での登録の使い心地
-  - ランク評価の kpm 基準（grade-god で GOD を足して6段階に。やさしいは GOD＝100・S＝80・A＝60。spec.md「結果画面」の表、hype.ts の GRADE_KPM）
+  - ランク評価の kpm 基準（grade-god で GOD を足して6段階に。やさしいは GOD＝100・S＝80・A＝60。ちょっぴり難しめの S は normal-grade-s70 で 60→70 に（未 push）。spec.md「結果画面」の表、hype.ts の GRADE_KPM）
   - ランク評価でミスを差し引く係数（1ミス0.2打鍵。hype.ts の GRADE_MISS_PENALTY）。ふつうに遊んで下がりすぎないか、ガチャガチャ押して十分下がるか
   - フィーバーに入るコンボ数（15）、節目の間隔、「見つけた」の1.2秒
   - 演出の多さ・効果音の音量や音色

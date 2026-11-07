@@ -95,7 +95,7 @@ export type Grade = 'GOD' | 'S' | 'A' | 'B' | 'C' | 'D'
 /** ランク評価の kpm の基準（GOD・S・A・B・C の下限）。難しいモードほど低い */
 export const GRADE_KPM: Readonly<Record<Difficulty, readonly [number, number, number, number, number]>> = {
   easy: [100, 80, 60, 40, 20],
-  normal: [90, 60, 50, 30, 10],
+  normal: [90, 70, 50, 30, 10],
   chaos: [70, 55, 40, 25, 10],
 }
 

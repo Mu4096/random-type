@@ -117,6 +117,11 @@ describe('grade', () => {
     expect(grade('chaos', 69)).toBe('S')
   })
 
+  it('ちょっぴり難しめモードの S は 70 から', () => {
+    expect(grade('normal', 70)).toBe('S')
+    expect(grade('normal', 69)).toBe('A')
+  })
+
   it('難しいモードほど同じ kpm でも高いランクになる', () => {
     expect(grade('easy', 56)).toBe('B')
     expect(grade('normal', 56)).toBe('A')
